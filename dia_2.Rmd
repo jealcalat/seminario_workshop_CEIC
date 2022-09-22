@@ -1,7 +1,7 @@
 ---
-title: "Teoría de la información y contingencias"
+title: "Mi título"
 author: "Emmanuel Alcalá"
-institute: ""
+institute: "ITESO"
 date: "`r Sys.Date()`"
 output:
   xaringan::moon_reader:
@@ -73,24 +73,25 @@ blockquote {
 }
 </style>
 
-# Teoría de la información 
-# Contingencias
+# Mi título
 # Emmanuel Alcalá
+## Departamento de Matemáticas y Física, ITESO
+
+.center2[
+```{r echo = FALSE}
+knitr::include_graphics("logo_ITESO_fondoazul.png")
+```
+]
 
 ---
 
 class: inverse,  middle
 
-# Preliminares: teoría de probabilidad, sumatorias y logaritmos.
+Segundo tipo: invertir color y poner en centro
 
----
+Contingencia: ¿contigüidad o dependencia?
 
-# Variables aleatorias y funciones de probabilidad
+>To say that a reinforcement is contingent upon a response may mean nothing more than that it follows the response
+- Skinner
 
----
-
-# 
-
-
-
-
+--- 
