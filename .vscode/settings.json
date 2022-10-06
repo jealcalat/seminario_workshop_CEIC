@@ -1,0 +1,16 @@
+{
+  "cSpell.language": "es-ES,es",
+  "spellright.language": [
+    "en-GB-10-1.",
+    "en-GB-9-0."
+  ],
+  "spellright.documentTypes": [
+    "markdown",
+    "plaintext"
+  ],
+  "spellright.parserByClass": {
+    "quarto": {
+      "parser": "markdown"
+    }
+  }
+}

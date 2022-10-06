@@ -81,7 +81,14 @@ blockquote {
 
 class: inverse,  middle
 
-# Preliminares: teoría de probabilidad, sumatorias y logaritmos.
+# Preliminares: sumatorias, conjuntos y logaritmos
+
+---
+## Funciones 
+
+Las funciones tienen datos de entrada y datos de salida. Entre la entrada y la salida existe una transformación, que es lo que llamamos "función". Si denotamos por 
+
+\[ f\colon X \mapsto Y \]
 
 ---
 
