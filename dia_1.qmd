@@ -1,22 +1,32 @@
 ---
-title: "Teoría de la información"
+title: "Contingencia e información en la explicación del comportamiento"
+subtitle: "Día 1. Teoría de la información"
+author: "Emmanuel Alcalá"
+thanks: "Ciclo de charlas auspiciado por la Universidad panamericana, campus Guadalajara y Universidad de Guadalajara-CEIC, con financiamiento CONACyT-320943"
 format: 
   beamer: 
     aspectratio: 169
     navigation: horizontal
     theme: Frankfurt
     colortheme: seahorse
-    section-titles: false
+    section-titles: true
     include-in-header: 
       text: |
         \usepackage{amsmath}
         \usepackage{amsfonts}
         \usepackage{amssymb}
+        \setbeamertemplate{frametitle}[default][center]
+jupyter: python3
+---
+
+# Temas
+
+1. Preliminares
+2. información y entropía
+
 ---
 
 # Preliminares
-
----
 
 ## Funciones
 
@@ -25,6 +35,8 @@ Las funciones tienen datos de entrada y datos de salida. Entre la entrada y la s
 $$ f\colon X \mapsto Y $$
 
 >la función $f$ mapea valores de $X$ (input) a $Y$ (output)
+
+\pause
 
 Por ejemplo, la función $y = 5x + 2$ nos dice que por cada valor de $x$, $y$ valdrá 5 veces $x$ más 2. Si $x=({\color{red}1}, {\color{blue}2},{\color{green!60!black} 3})$, la función transforma a $x$ en la colección de valores
 
@@ -45,6 +57,7 @@ $$
 $$
 
 Donde $m$ es el límite inferior de la suma, y $n$ el límite superior de la suma. 
+\pause
 
 Ejemplo: sumar los valores de $x$ del 1 al 4
 
@@ -54,14 +67,17 @@ Ejemplo: sumar los valores de $x$ del 1 al 4
 \end{align*}
 
 En corchete coloco *el orden* (el índice) del elemento
+
 ---
 
 ## Conjuntos (brevísima)
 
-Un conjunto es una colección de distintos objetos. $A$ es un subconjunto de $B$ si todo elemento de $A$ es también incluido en $B$, que se simboliza como $A \subset B$. 
+Un conjunto es una colección de distintos objetos. $A$ es un subconjunto de $B$ si todo elemento de $A$ es también incluido en $B$, que se simboliza como $A \subset B$.
 
 - El conjunto vacío, denotado $\emptyset$, es el conjunto que no contiene nada.
+
 - Denotamos por $|S|$ a la cardinalidad (maomeno \textit{el número de sus elementos}) de $S$. Por ejemplo, $|\emptyset|=0$.
+
 - $x \in A$ es "$x$ es un miembro del conjunto $A$".
 En probabilidad, los eventos se tratan como conjuntos de valores. Si lanzas una moneda 10 veces, el evento "veces que cae águila" es un conjunto de valores. 
 
@@ -72,22 +88,60 @@ En probabilidad, los eventos se tratan como conjuntos de valores. Si lanzas una 
 Si todos los resultados son igualmente posibles, la probabilidad de $A$
 
 $$
-P_{\textrm{naïve}}(A) = \frac{\textnormal{veces que sale } A}{\textnormal{total de resultados (i.e., } A \cup A^c)} = \frac{|A|}{|S|}
+\Pr_{\textrm{naïve}}(A) = \frac{\textnormal{veces que sale } A}{\textnormal{total de resultados (i.e., } A \cup A^c)} = \frac{|A|}{|S|}
 $$
 
 Donde por $|\cdot|$ entendemos la *cardinalidad*, o el número de elementos. 
 
-**Probabilidad** - Variables y espacios:
+\pause
 
-**Variable aleatoria**: es una función que mapea los resultados de un experimento aleatorio al conjunto de los números reales (comúnmente). Se suele representar con letra mayúscula (e.g., $X$).
+Existen diferentes interpretaciones de la probabilidad. La más usada, la frecuentista, la define formalmente como el valor límite de $\Pr(A)$ cuando $|S|$ tiende a infinito. \pause
 
-Existen variables aleatorias discretas (sus valores son infinitos contables), y continuas (sus valores son infinitos no contables).
+Por ejemplo, la probabilidad de obtener caras al lanzar una moneda es el límite de 
+
+$$\Pr(caras)=\frac{\#caras}{N}$$
+
+cuando el número de lanzamientos $N\rightarrow \infty$.
 
 ---
 
-**Espacio muestral**: el conjunto de todos los resultados posibles. Se suele representar con $\Omega$. De este conjunto la $X$ mapea a los reales: $X\colon \Omega \rightarrow \mathbb R$. Es decir, a cada elemento de $\Omega$ asigna un número real, $X(\omega)$.
+### Variables y espacios:
 
-**Evento**: subconjunto de $\Omega$, usualmente representado por una vocal mayúscula, e.g., $A$. Si lanzamos una moneda dos veces, $\Omega = \{HH,HT,TT,TH\}$. El evento ``la primera moneda cae H'' es $A=\{HH,HT\}$. 
+**Variable aleatoria**: es una función que mapea los resultados de un experimento aleatorio al conjunto de los números reales (comúnmente). Se suele representar con letra mayúscula (e.g., $X$).
+
+Existen variables aleatorias discretas (sus valores son finitos o infinitos contables, como $(0, 1, 2, ...)$), y continuas (sus valores son infinitos no contables).\pause
+
+**Espacio muestral**: El conjunto de todos los resultados posibles. Se suele representar con $\Omega$. De este conjunto la $X$ mapea a los reales: $X\colon \Omega \rightarrow \mathbb R$. Es decir, a cada elemento de $\Omega$ asigna un número real, $X(\omega)$.\pause
+
+**Evento**: Subconjunto de $\Omega$, usualmente representado por una vocal mayúscula, e.g., $A$. Si lanzamos una moneda dos veces, $\Omega = \{HH,HT,TT,TH\}$. El evento ``la primera moneda cae H'' es $A=\{HH,HT\}$. 
+
+---
+
+Algunas propiedades de $\Pr$ son:
+
+1. $0\leq \Pr(A) \leq 1$ y $\sum \Pr(A) = 1$
+2. Si $\emptyset$ es un conjunto nulo, entonces $\Pr(\emptyset)=0$.
+2. Si $A \subset B$, entonces $\Pr(A)\leq \Pr(B)$.
+3. Si $A^c$ denota el complemento de $A$, entonces $\Pr(A^c)=1-\Pr(A)$.
+4. Si $A \cap B = \emptyset$ denota la intersección nula de $A$ y $B$, entonces $\Pr(A \cup B)=\Pr(A) + \Pr(B)$, $\Pr$ es aditiva para eventos disjuntos.
+5. De otra manera, para eventos arbitrarios $A, B$, $\Pr(A \cup B)=\Pr(A) + \Pr(B)-\Pr(A\cap B)$. 
+6. Dos eventos $A$ y $B$ son independientes si $\Pr(A \cup B)=\Pr(A)\Pr(B)$. 
+
+---
+
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.3\textwidth]{2022-10-18-10-57-40.png}
+\end{figure}
+
+### Reglas
+
+1. $p(x_2, y_1) = \frac{n_{21}}{N}$ (probabilidad conjunta de $x_2$ y $y_1$).
+2. $c_i=\sum_{j=1}^3n_{ij}$ (suma de todos los $n_{ij}$ con $i$ fijo).
+3. $p(x_i) = \frac{c_i}{N}=\sum_{j=1}^5p(x_i, y_j)$ (probabilidad marginal de $x_i$; **regla de la suma**).
+4. $p(y_j | x_i) = \frac{n_{ij}}{c_i}$ (probabilidad condicional de $y_j$ *dado* que $x_i$ ocurrió).
+5. $p(x_i, y_i) = \frac{n_{ij}}{N} =  \frac{n_{ij}}{c_i} \frac{c_i}{N} = p(y_j | x_i)p(x_i)$ (**regla del producto**)
 
 ---
 
@@ -100,6 +154,8 @@ Valor esperado - (a.k.a. *media*, *esperanza*, o *promedio*) es una suma pondera
   \text{E}[X] & = \sum\limits_i x_i p(X=x_i), \text{ si $x$ es discreta} \\
   \text{E}[X] & = \int_{\mathbb R} xf(x)dx, \text{ si $x$ es continua}  
 \end{align*}
+
+La multiplicación $x_ip(X=x_i)$ es el valor de $x_i$ por la probabilidad de que $x_i$ ocurra.
 
 Por brevedad, podemos simplemente escribir $p(x_i)$ para el caso discreto. Para el caso continuo, $f(x)$ denota la función de densidad de probabilidad.
 
@@ -127,6 +183,10 @@ Que se lee ``para todos los $x$ del conjunto $\mathbb{R}$ mayores que 0".
 
 Un logaritmo se puede definir como el valor al que hay que elevar la base $b$ para obtener $x$.
 
+\pause
+
+Por ejemplo, $\log_2(16)=4$ ('4 es el logaritmo base 2 de 16'). Por lo tanto, para obtener 16 de nuevo elevamos 2 a la cuarta, $2^4=16$.
+
 ---
 
 **Propiedad 1** $log_b (x\times y) = \log_b(x) + \log_b(y)$
@@ -139,20 +199,97 @@ En palabras, esto significa que el logaritmo base $b$ del producto de dos númer
 
 Esta propiedad es simplemente la operación inversa de la \textbf{Propiedad 1}. Esta propiedad permite expresar las razones (o proporciones) en términos de diferencias. 
 
-Si, por ejemplo, $x$ es mayor a $y$, el rango de valores que puede tomar $x/y$ va desde 1 a infinito. Por otro lado, si $y \geq x$, el rango de valores está entre 0 y 1. Por lo tanto, las razones no son funciones simétricas. 
+Si, por ejemplo, $x>y$, el rango de valores que puede tomar $x/y$ va desde 1 a infinito. Por otro lado, si $x\leq y$, el rango de valores está entre 0 y 1. Las razones no son funciones simétricas. 
 
-Los logaritmos sí. Si $x>y$, $\log(x/y) > 1$, si $x<y$, $\log(x/y)<0$. Si $x=y$, $\log(x/y)=1$.
+Los logaritmos sí. Si $x>y$, $\log_b(x/y) > 1$, si $x<y$, $\log_b(x/y)<0$. Si $x=y$, $\log_b(x/y)=0$. El último resultado implica que $\log_b(1)=0$
 
 ---
 
 **Propiedad 3** $\log_b (x^a) = a \log_b (x)$
 
-Esto se sigue de la \textbf{Propiedad 1}. Supongamos que $a = 3$, entonces $\log_b (x^a) = \log_b (x^3) = \log_b (x \times x \times x)$, lo que es lo mismo a escribir $\log_b (x) + \log_b (x) + \log_b (x)$, y dado que $\log_b (x)$ se repite 3 veces, la expresión $\log_b (x) + \log_b (x) + \log_b (x)$ es igual a $3\log_b (x)$. La expresión es generalizable a números fraccionarios, como 1/2. 
+Esto se sigue de la \textbf{Propiedad 1}. Supongamos que $a = 3$, entonces $\log_b (x^a) = \log_b (x^3) = \log_b (x \times x \times x)$, lo que es lo mismo a escribir $\log_b (x) + \log_b (x) + \log_b (x)$, y dado que $\log_b (x)$ se repite 3 veces, la expresión $\log_b (x) + \log_b (x) + \log_b (x)$ es igual a $3\log_b (x)$. 
 
 ---
 
-**Propiedad 3** $\log_b ( 1 ) = 0$
+**Propiedad 4** Si $x < y$, $\log_b(x) < \log_b(y)$.
 
-Que es lo inverso a la \textbf{Propiedad 2.2} de los exponentes, donde $b^0 = 1$.
+En palabras, esto significa que el $\log_b(x)$ es una función monotónica y estrictamente creciente de $x$: si $x$ crece, $\log_b(x)$ también crece.
 
-## TODO: ejercicios de probabilidad, 
+---
+
+### Interludio: ejercicios
+
+1. Suponiendo que lanzar dos veces una moneda *justa* son eventos independientes, ¿cuál es la probabilidad de obtener dos caras? Es decir, $p(x_1=cara \cap x_2 = cara)$. Hint: la probabilidad de una sola cara es $p(cara)=1/2$.
+
+2. 
+
+:::: {.columns}
+
+::: {.column width="40%"}
+\begin{figure}
+  \centering
+  \includegraphics[width=0.8\textwidth]{2022-10-18-11-16-55.png}
+\end{figure}
+:::
+
+::: {.column width="60%"}
+- ¿Cuál es la probabilidad $p(y_1, x_1)$?
+
+- ¿Cuál es la probabilidad $p(y_1)$?
+
+- ¿Cuál es la probabilidad $p(x_1 | y_1)$?
+:::
+
+::::
+
+
+
+
+---
+
+# Información y entropía
+
+Usualmente, por *información* nos referimos coloquialmente a la cantidad de datos que son guardados, enviados, recibidos o manipulados por algún medio.
+
+. . .
+
+Otra forma de concebir la información es como reducción de incertidumbre.
+
+. . .
+
+Por ejemplo, antes de leer un libro su contenido es desconocido. En ese sentido, nuestra incertidumbre es alta. La primera vez que lo leemos, esa incertidumbre con respecto al contenido disminuye y, al mismo tiempo, podríamos decir que ganamos información.
+
+--- 
+
+## Contenido de información
+
+La noción de información que necesitamos debe tener dos propiedades deseables:
+
+::: {.incremental}
+
+- La información debe ser extensiva y aditiva. La combinación de dos conjuntos de información con la misma cantidad duplican la información. 
+- La información reduce la incertidumbre. La cantidad de información es una función monotónica estrictamente decreciente de la incertidumbre de un evento. Cuanto más probable es un evento, menos información conlleva; cuanto menos probable, más información conlleva.
+
+:::
+
+. . .
+
+La única función que satisface esos dos requerimientos es 
+
+$$
+  I(x) = -\log_b(p(x)) =  \log_b\frac{1}{p(x)}
+$$
+
+---
+
+```{python}
+#| fig.width = 5
+
+import numpy as np
+import matplotlib.pyplot as plt 
+def Ipx(x):
+  return -np.log(x)
+
+x = np.arange(0, 1, 0.01)
+plt.plot(x, Ipx(x))
+```
