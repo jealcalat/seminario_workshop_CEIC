@@ -22,7 +22,16 @@ jupyter: python3
 # Temas
 
 1. Preliminares
-2. información y entropía
+2. Información y entropía
+
+---
+
+**Motivación**
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.5\textwidth]{./img/Figura2.pdf}
+\end{figure}
 
 ---
 
@@ -43,8 +52,6 @@ Por ejemplo, la función $y = 5x + 2$ nos dice que por cada valor de $x$, $y$ va
 $$
 y=({\color{red}1*5+2}, {\color{blue}2*5+2},{\color{green!60!black}3*5+2})
 $$
-
-En una tabla es más fácil de visualizar
 
 ---
 
@@ -107,13 +114,13 @@ cuando el número de lanzamientos $N\rightarrow \infty$.
 
 ### Variables y espacios:
 
-**Variable aleatoria**: es una función que mapea los resultados de un experimento aleatorio al conjunto de los números reales (comúnmente). Se suele representar con letra mayúscula (e.g., $X$).
+**Variable aleatoria**: es una función que mapea los resultados de un experimento aleatorio al conjunto de los números reales. Se suele representar con letra mayúscula (e.g., $X$). Existen variables aleatorias discretas (sus valores son finitos o infinitos contables, como $(0, 1, 2, ...)$), y continuas (sus valores son infinitos no contables).\pause
 
-Existen variables aleatorias discretas (sus valores son finitos o infinitos contables, como $(0, 1, 2, ...)$), y continuas (sus valores son infinitos no contables).\pause
-
-**Espacio muestral**: El conjunto de todos los resultados posibles. Se suele representar con $\Omega$. De este conjunto la $X$ mapea a los reales: $X\colon \Omega \rightarrow \mathbb R$. Es decir, a cada elemento de $\Omega$ asigna un número real, $X(\omega)$.\pause
+**Espacio muestral**: El conjunto de todos los resultados posibles. Se suele representar con $\Omega$. De este conjunto la $X$ mapea a los reales: $X\colon \Omega \rightarrow \mathbb R$. Es decir, le asigna a cada elemento de $\Omega$ asigna un número real.\pause
 
 **Evento**: Subconjunto de $\Omega$, usualmente representado por una vocal mayúscula, e.g., $A$. Si lanzamos una moneda dos veces, $\Omega = \{HH,HT,TT,TH\}$. El evento ``la primera moneda cae H'' es $A=\{HH,HT\}$. 
+
+**Distribución de probabilidad**: función que asigna a cada valor de $X$ un valor entre 0 y 1. Nos dice qué tan frecuentemente encontraremos un valor de $X$.
 
 ---
 
@@ -129,10 +136,9 @@ Algunas propiedades de $\Pr$ son:
 
 ---
 
-
 \begin{figure}
   \centering
-  \includegraphics[width=0.3\textwidth]{2022-10-18-10-57-40.png}
+  \includegraphics[width=0.3\textwidth]{./img/2022-10-18-10-57-40.png}
 \end{figure}
 
 ### Reglas
@@ -228,7 +234,7 @@ En palabras, esto significa que el $\log_b(x)$ es una función monotónica y est
 ::: {.column width="40%"}
 \begin{figure}
   \centering
-  \includegraphics[width=0.8\textwidth]{2022-10-18-11-16-55.png}
+  \includegraphics[width=0.8\textwidth]{./img/2022-10-18-11-16-55.png}
 \end{figure}
 :::
 
@@ -242,12 +248,29 @@ En palabras, esto significa que el $\log_b(x)$ es una función monotónica y est
 
 ::::
 
-
-
-
 ---
 
 # Información y entropía
+
+Podemos hablar de la información en un sentido instrumental (como una unidad de comunicación), o como *algo* que permite a un remitente o transmisor provocar un resultado en un receptor.
+
+El problema es que no siempre se desambiguan estos dos usos, lo cual ha llevado a un abuso del concepto.
+
+. . .
+
+Se describirá primero la teoría matemática de la información, que descansa sobre el primer uso (la información como un *estadístico*). En la siguiente charla se hablará sobre cómo ha sido usada para formalizar una noción de contingencia como dependencia.
+
+---
+
+::: {.incremental}
+
+- La teoría de la información moderna tiene sus orígenes en *A Mathematical Theory of Comunication*, de Claude Shannon en 1948.
+- En ella mostró que cualquier señal puede ser codificada como una serie de símbolos discretos y transmitidos con perfecta fidelidad entre transmisor y receptor a través de un canal, incluso si el canal es ruidoso.
+- A la teoría no le importaba el *significado* de lo transmitido. 
+
+:::
+
+---
 
 Usualmente, por *información* nos referimos coloquialmente a la cantidad de datos que son guardados, enviados, recibidos o manipulados por algún medio.
 
@@ -257,7 +280,7 @@ Otra forma de concebir la información es como reducción de incertidumbre.
 
 . . .
 
-Por ejemplo, antes de leer un libro su contenido es desconocido. En ese sentido, nuestra incertidumbre es alta. La primera vez que lo leemos, esa incertidumbre con respecto al contenido disminuye y, al mismo tiempo, podríamos decir que ganamos información.
+Por ejemplo, antes de leer un libro su contenido es desconocido. En ese sentido, nuestra incertidumbre es alta. La primera vez que lo leemos, esa incertidumbre con respecto al contenido disminuye y, al mismo tiempo, podríamos decir que una gran cantidad de información fue transmitida (menos que en una segunda lectura).
 
 --- 
 
@@ -267,8 +290,8 @@ La noción de información que necesitamos debe tener dos propiedades deseables:
 
 ::: {.incremental}
 
-- La información debe ser extensiva y aditiva. La combinación de dos conjuntos de información con la misma cantidad duplican la información. 
-- La información reduce la incertidumbre. La cantidad de información es una función monotónica estrictamente decreciente de la incertidumbre de un evento. Cuanto más probable es un evento, menos información conlleva; cuanto menos probable, más información conlleva.
+- **La información debe ser extensiva y aditiva**. La combinación de dos conjuntos de información con la misma cantidad duplican la información. 
+- **La información reduce la incertidumbre**. La cantidad de información es una función monotónica estrictamente decreciente de la incertidumbre de un evento. Cuanto más probable es un evento, menos información conlleva; cuanto menos probable, más información conlleva.
 
 :::
 
@@ -283,13 +306,93 @@ $$
 ---
 
 ```{python}
-#| fig.width = 5
+#| fig-pos: h
+#| fig-align: center
+#| echo: false
 
 import numpy as np
 import matplotlib.pyplot as plt 
+plt.figure(figsize=(3,2))
+plt.rcParams.update({
+    "text.usetex": True
+})
+
 def Ipx(x):
   return -np.log(x)
 
 x = np.arange(0, 1, 0.01)
 plt.plot(x, Ipx(x))
+plt.xlabel('$p(x)$')
+plt.ylabel(r'$I(x)=-\log_b(x)$');
 ```
+
+---
+
+## Sistema de comunicación
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.75\textwidth]{./img/2022-10-19-08-21-33.png}
+\end{figure}
+
+---
+
+Su la fuente quiere transmitir un mensaje con $n$ caracteres, la incertidumbre acerca de los posibles 'mensajes' (es decir, de los caracteres, su orden, etc.) es un promedio de la información de cada uno de los $n$ caracteres. A esta cantidad se le llamó entropía
+
+$$
+  H(x) = \sum_{i=1}^n p_i I(x_i) = \sum_{i=1}^n p_i \log_b\frac{1}{p_i}
+$$
+
+Donde $n$ son los posibles mensajes (cada caracter en su posición $i$), y $p_i$ es la probabilidad del $i$ mensaje.
+
+Notar que la ecuación para $H(x)$ tiene la misma estructura que nuestro viejo amigo $E[X]=\sum_ip_i x_i$, es por ello que $H(x)$ se suele describir como *la incertidumbre promedio* asociada a un mensaje.
+
+---
+
+En el diagrama de Shannon, debe existir un transmisor que *codifique* el mensaje en términos de fluctuaciones de una cantidad física (e.g., eléctrica) y que se envíe de una fuente a un receptor. 
+
+. . .
+
+Esta es una de las partes más discutidas en, por ejemplo, neurociencias cognitivas. Se hace uso extensivo de teoría de la información para describir las capacidades computacionales del cerebro, pero se ha fallado en encontrar un *código* que haría de esa descripción formal adecuada según Shannon.
+
+---
+
+¿Cuánta información de la fuente es transmitida? A esta cantidad Shannon le llamó *información mutua*.
+
+. . .
+
+Pensémoslo así: antes de recibir un mensaje se tiene una entropía, y luego de recibir el mensaje se tiene otra. A la diferencia es a lo que le llamamos información mutua. 
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.4\textwidth]{./img/2022-10-19-08-55-52.png}
+\end{figure}
+
+Si $X$ es el mensaje de la fuente, y $Y$ el del receptor, ¿cuánta incertidumbre se reduce de $X$ al conocer $Y$?
+
+---
+
+
+$$
+  I(X;Y) = H(X) - H(X|Y)
+$$
+
+En donde $H(X|Y)$ es la *entropía condicional* de $X$ dado $Y$. Esta entropía mide la incertidumbre promedio que queda sobre $X$ una vez que $Y$ es conocido.
+
+$$
+  H(X|Y) = \sum_{x, y}p(x,y)\log_b\frac{1}{p(x,y)}
+$$
+
+
+**Si $X$ y $Y$ son independientes**, la entropía condicional de $X$ dado $Y$ es la entropía de $X$, dado que $Y$ no conlleva información sobre $X$ al ser independiente. Por lo tanto, $I(X;Y)$ = 0. Esto debido a que $H(X|Y)$ es la entropía de $p(x|y)$.
+
+---
+
+La información mutua nos puede decir, entonces, relaciones de dependencia entre dos distribuciones.
+
+**Importante**: a diferencia de otras métricas de dependencia, como la correlación, permite conocer relaciones de dependencia *no lineal*.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.9\textwidth]{./img/2022-10-19-09-19-10.png}
+\end{figure}
