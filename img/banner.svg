@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="130.56644mm"
+   height="27.945183mm"
+   viewBox="0 0 130.56644 27.945183"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.2.1 (9c6d41e410, 2022-07-14, custom)"
+   sodipodi:docname="banner.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#cccccc"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="1"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="2.1946698"
+     inkscape:cx="269.2888"
+     inkscape:cy="76.321277"
+     inkscape:window-width="2536"
+     inkscape:window-height="1036"
+     inkscape:window-x="10"
+     inkscape:window-y="30"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2">
+    <rect
+       x="71.241028"
+       y="268.39075"
+       width="359.03683"
+       height="140.61359"
+       id="rect113" />
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-24.208824,-66.277512)">
+    <rect
+       style="fill:#ececec;stroke-width:0.264583"
+       id="rect385"
+       width="130.56644"
+       height="27.945183"
+       x="24.208824"
+       y="66.277512"
+       ry="3.3449552" />
+    <text
+       xml:space="preserve"
+       transform="matrix(0.26458333,0,0,0.26458333,25.734931,-7.1394023)"
+       id="text111"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Latin Modern Roman';-inkscape-font-specification:'Latin Modern Roman, ';text-align:center;white-space:pre;shape-inside:url(#rect113);shape-padding:23.0711;fill:#000000"
+       x="153.39"
+       y="0"><tspan
+         x="250.75977"
+         y="302.63294"
+         id="tspan671">
+</tspan><tspan
+         x="250.75977"
+         y="317.63294"
+         id="tspan673">
+</tspan><tspan
+         x="129.10378"
+         y="332.63294"
+         id="tspan675">Ciclo de charlas auspiciado por la Universidad </tspan><tspan
+         x="110.25178"
+         y="347.63294"
+         id="tspan677">panamericana, campus Guadalajara y Universidad de </tspan><tspan
+         x="96.943768"
+         y="362.63294"
+         id="tspan679">Guadalajara-CEIC, con financiamiento CONACyT-320943</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333px;font-family:'Latin Modern Roman';-inkscape-font-specification:'Latin Modern Roman, ';white-space:pre;inline-size:127.497;fill:#000000;stroke-width:0.264583"
+       x="30.156048"
+       y="73.322914"
+       id="text277"><tspan
+         x="30.156048"
+         y="73.322914"
+         id="tspan681">Contingencia e información en la explicación del comportamiento</tspan></text>
+  </g>
+</svg>
