@@ -1,0 +1,66 @@
+.title-slide .remark-slide-number {
+  display: none;
+}
+
+.center2 {
+  margin: -1%;
+  position: absolute;
+  top: 70%;
+  left: 51%;
+  width: 280px;
+  height: 128px;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.my-one-page-font {
+  font-size: 20px;
+}
+
+blockquote {
+  background-color: #3A0E38;
+}
+
+.user-logo {
+  width: 680px;
+  position: absolute;
+  background: white;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  bottom: -10%;
+}
+
+.title-slide .author {
+  font-family: "Latin Modern Roman";
+  font-size: 2em;
+  position: absolute;
+  /* bottom: 50%; */
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  color: #3A0E38;
+}
+
+.title-slide h1 {
+  font-family: "Latin Modern Sans";
+  font-weight: bold;
+  font-size: 2.5em;
+  /* color: #970639; */
+}
+
+.title-slide .date {
+  font-family: "Latin Modern Roman";
+  font-size: 1em;
+  position: absolute;
+  bottom: 18%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-40%, -50%);
+  color: #3A0E38;
+}
+
+.strong {
+  font-weight: bold;
+  font-size: 1em;
+  color: #12695E;
+}

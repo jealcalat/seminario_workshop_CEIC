@@ -34,31 +34,31 @@
   --header-font-family-fallback: Georgia, serif;
   --code-font-family: 'FiraCode Nerd Font';
   --code-font-is-google: 0;
-  --base-font-size: 20px;
+  --base-font-size: 22px;
   --text-font-size: 1.2rem;
   --code-font-size: 0.9rem;
   --code-inline-font-size: 1em;
-  --header-h1-font-size: 2.75rem;
+  --header-h1-font-size: 2.2rem;
   --header-h2-font-size: 2.25rem;
   --header-h3-font-size: 1.75rem;
 
   /* Colors */
-  --text-color: #FEFEFE;
-  --header-color: #E9D9EB;
-  --background-color: #00467F;
-  --link-color: #E9D9EB;
-  --text-bold-color: #E9D9EB;
+  --text-color: #12695E;
+  --header-color: #12695E;
+  --background-color: white;
+  --link-color: #12695E;
+  --text-bold-color: #12695E;
   --code-highlight-color: rgba(255,255,0,0.5);
-  --inverse-text-color: #00467F;
-  --inverse-background-color: #E9D9EB;
-  --inverse-header-color: #00467F;
-  --inverse-link-color: #E9D9EB;
-  --title-slide-background-color: #00467F;
-  --title-slide-text-color: #E9D9EB;
-  --header-background-color: #E9D9EB;
-  --header-background-text-color: #00467F;
-  --primary: #00467F;
-  --secondary: #E9D9EB;
+  --inverse-text-color: white;
+  --inverse-background-color: #12695E;
+  --inverse-header-color: #BB945D;
+  --inverse-link-color: #12695E;
+  --title-slide-background-color: white;
+  --title-slide-text-color: #970639;
+  --header-background-color: #12695E;
+  --header-background-text-color: white;
+  --primary: white;
+  --secondary: #12695E;
 }
 
 html {
@@ -99,10 +99,10 @@ h1, h2, h3 {
 }
 .remark-inline-code {
   font-size: var(--code-inline-font-size);
-  color: #E9D9EB;
+  color: #12695E;
 }
 .remark-slide-number {
-  color: #FEFEFE;
+  color: #12695E;
   opacity: 1;
   font-size: 0.9rem;
 }
@@ -150,10 +150,10 @@ a, a > code {
   float: left;
 }
 .left-column h2, .left-column h3 {
-  color: #E9D9EB99;
+  color: #12695E99;
 }
 .left-column h2:last-of-type, .left-column h3:last-child {
-  color: #E9D9EB;
+  color: #12695E;
 }
 .right-column {
   width: 75%;
@@ -175,7 +175,7 @@ img, video, iframe {
   max-width: 100%;
 }
 blockquote {
-  border-left: solid 5px #E9D9EB80;
+  border-left: solid 5px #12695E80;
   padding-left: 1em;
 }
 .remark-slide table {
@@ -192,7 +192,7 @@ th, td {
 .remark-slide table:not(.table-unshaded) thead,
 .remark-slide table:not(.table-unshaded) tfoot,
 .remark-slide table:not(.table-unshaded) tr:nth-child(even) {
-  background: #E5ECF2;
+  background: #FFFFFF;
 }
 table.dataTable tbody {
   background-color: var(--background-color);
@@ -202,7 +202,7 @@ table.dataTable.display tbody tr.odd {
   background-color: var(--background-color);
 }
 table.dataTable.display tbody tr.even {
-  background-color: #E5ECF2;
+  background-color: #FFFFFF;
 }
 table.dataTable.hover tbody tr:hover, table.dataTable.display tbody tr:hover {
   background-color: rgba(255, 255, 255, 0.5);
