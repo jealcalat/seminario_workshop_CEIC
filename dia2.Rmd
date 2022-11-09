@@ -19,6 +19,7 @@ class: title-slide center
 ```{r setup, include=FALSE}
 library(knitr)
 library(xaringan)
+library(reticulate)
 options(htmltools.dir.version = FALSE)
 opts_chunk$set(echo=FALSE, fig.pos = "H")
 ```
@@ -210,7 +211,7 @@ $$
 
 - Por alguna razón, define la dependencia entre dos tasas de eventos en términos de covarianza incluso cuando la relación es no lineal
 
-```{r baum_cov, out.width='40%', fig.cap='', fig.align='center'}
+```{r baum_cov, out.width='50%', fig.cap='', fig.align='center'}
 knitr::include_graphics('./img/Baum_cov_nocov.png')
 ```
 
@@ -224,8 +225,10 @@ knitr::include_graphics('./img/Baum_cov_nocov.png')
 
 - Baum también sugiere que la conducta operante constituye un bucle de retroalimentación negativa
 
+--
+
 .pull-left[
-```{r feedback, out.width='60%', fig.cap=''}
+```{r feedback, out.width='90%', fig.cap='', fig.align='center'}
 knitr::include_graphics('./img/baum_feedback.png')
 ```
 
@@ -234,17 +237,146 @@ knitr::include_graphics('./img/baum_feedback.png')
 
 ]
 
+--
+
 .pull-right[
 
-- Suponiendo que es un termostato. 
-- El punto fijo (set-point) es 24°C.
+- Suponiendo que es un aire acondicionado, con un termostato, con un punto fijo (set-point) de 24°C.
 
-```{r stepfbck, out.width='60%', fig.cap=''}
+```{r stepfbck, out.width='60%', fig.cap='', fig.align='center'}
 knitr::include_graphics('./img/step_response_control.png')
 ```
-
-- ¿Qué sucede cuando la diferencia entre el set-point y la tasa de reforzadores es muy pequeña? En el límite, esta diferencia es 0. 
-
+- Cambios en la temperatura van seguidos de cambios en el aire acondicionado.
 ]
 
 ---
+
+```{r stepfbck2, out.width='45%', fig.cap='', fig.align='center'}
+knitr::include_graphics('./img/step_response_control.png')
+```
+
+- Ambos se compensan. En el límite, la diferencia entre el set-point y la temperatura ambiental es 0.
+
+- Si obtenemos una regresión entre los cambios en la temperatura y los cambios en el aire acondicionado no dirá mucho. La correlación será de 0.
+
+- Lo cual no significa que no haya una relación entre ambos. Simplemente, en estado estable ambas variables están en equilibrio.
+
+- No parece que la covarianza/correlación pueda explicar el mantenimiento de la conducta. 
+
+---
+
+# Contingencia como información
+
+--
+
+- Gallistel no parece diferir con Baum en lo fundamental: «The contingencies of ordinary experience, however, are defined over time»<sup>3</sup>.
+
+--
+
+- Para computar una correlación debemos tener dos vectores aleatorios: el de tasa de respuesta y el de tasa de reforzamiento.
+
+--
+
+- Si lo que varió Rescorla fue el parámetro de una distribución, tiene sentido que lo que comparemos sean distribuciones.
+--
+
+- En particular, si la conducta es sensible a la distribución de los intervalos entre reforzadores, podria decirse que los eventos «transmiten información sobre los demás en la medida en que la ocurrencia de un evento reduce la incertidumbre sobre el otro»<sup>3</sup>.
+
+.footnote[3 Gallistel et al., Temporal contigency]
+
+---
+
+- Una medida de contigencia, según Gallistel, debe tener en cuenta las siguientes características:
+
+--
+
+  - Debe ser medible.
+  - Debe tener en cuenta el tiempo de ocurrencia.
+  - Debe poder aplicarse a cualquier tipo de dependencia.
+  - No debe depender de la discretización del tiempo en segmentos arbitrarios.
+
+--
+
+- En la pasada sesión definimos la información con base en dos propiedades:
+
+  - **La información debe ser extensiva y aditiva**. La combinación de dos conjuntos de información con la misma cantidad duplican la información. 
+  - **La información reduce la incertidumbre**. La cantidad de información es una función monotónica estrictamente decreciente de la incertidumbre de un evento. Cuanto más probable es un evento, menos información conlleva; cuanto menos probable, más información conlleva.
+
+---
+
+$$
+  I(x) = -\log_b(p(x)) =  \log_b\frac{1}{p(x)}
+$$
+
+```{r infox, fig.height=5, fig.width=6, fig.cap='', fig.align='center'}
+fun_ix <- function(x){
+  -log(x)
+}
+x <- seq(0, 1, 0.01)
+par(las=1)
+plot(x, fun_ix(x), type = 'l', ylab = 'I(x)')
+```
+
+Definimos también la *entropía* como la información promedio
+
+$$
+  H(x) = \sum_{i=1}^n p_i \log_b\frac{1}{p_i}
+$$
+
+---
+
+- Suponer un programa de IV, en el que los intervalos entre reforzadores (IRI) tienen una distribución exponencial.
+
+```{r exp, fig.height=3.5, fig.width=4, fig.cap='', fig.align='center'}
+par(las=1, mgp=c(0.5,0,0))
+curve(dexp(x, 1/30), from = 0, to = 270, axes=FALSE, ylab = 'p(IRI)', xlab='IRI')
+box()
+```
+
+- Es decir, los intervalos pequeños son más frecuentes.
+
+--
+
+- Los intervalos entre respuestas (iri) son más cortos en promedio. La mayoría de ellos no produce reforzadores.
+
+--
+
+- De vez en cuando, uno de ellos los produce.
+
+---
+
+- ¿Cuál es la contingencia?
+
+--
+
+- Si queremos medir como la tasa de respuestas reduce la incertidumbre de la ocurrencia del reforzador, podemos considerar la distribuciones de los iri con respecto a los IRI.
+
+--
+
+- Comenzamos, primero, estimando la distribución conjunta $p(\text{IRI}, \text{iri})$, una distribución sobre todas las posibles combinaciones de IRI,iri.
+
+--
+
+- De nuevo, si queremos saber cómo la distribución de respuestas en el tiempo reduce la incertidumbre de ocurrencia del reforzador, en teoría de la información queremos saber la información mutua entre dos distribuciones: 
+
+  - ¿cuánta incertidumbre se reduce sobre los IRIs respondiendo a cierta tasa (es decir, con un iri promedio)?
+
+$$
+  I(\text{IRI};\text{iri}) = H(\text{IRI}) - H(\text{IRI}\mid \text{iri})
+$$
+
+---
+
+## Coeficiente de incertidumbre
+
+A partir de la información mutua, definimos una cantidad relacionada llamada *coeficiente de incertidumbre**.
+
+$$
+C_{\text{IRI,iri}}=\frac{  I(\text{IRI};\text{iri}) }{H(\text{IRI})}
+$$
+
+Dado los iri, ¿qué fracción de IRI podemos predecir? Dicho de otra manera, podemos decir qué dependencia tienen los iri con respecto a los IRI. Es decir, *una medida de contingencia*.
+
+--
+
+Si la distribución de IRI y de iri son independientes, la información mutua es 0. No hay contingencia. La entropía condicional de $IRI$ dado $iri$ es la entropía de $IRI$, dado que $iri$ no conlleva información sobre $IRI$ al ser independiente. Por lo tanto, $I(IRI;iri)$ = 0. Esto debido a que $H(IRI|iri)$ es la entropía de $p(IRI|iri)$.
