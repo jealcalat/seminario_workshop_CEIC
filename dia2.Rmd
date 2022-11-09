@@ -60,6 +60,7 @@ style_duo(
 class: inverse,  middle
 
 # Cuatro concepciones de contingencia
+--
 
 - Contingencia como contigüidad
 
@@ -138,22 +139,112 @@ Asumiendo que un ensayo es un $t$ especificado entre el inicio y fin de un EC:
 .strong[¿Cómo lo hizo Rescorla?]
 --
 
-```{r rescorla1968, out.width='50%', fig.cap='', fig.pos}
+.pull-left[
+```{r rescorla1968, out.width='70%', fig.cap='Rescorla 1968'}
 knitr::include_graphics('./img/rescorla1968.png')
 ```
+]
+--
 
-- En el experimento clásico de Rescorla de 1968<sup>1</sup>, fundamental en esta visión, se usaron diferentes $p(\text{EI}\mid \text{noEC})$. Se presentaron 12 ensayos de 2 min, con un intervalo entre ensayos *promedio* de 8 min.
+.pull-right[
+
+- En el experimento clásico de Rescorla de 1968<sup>1</sup>, se usaron diferentes $p(\text{EI}\mid \text{noEC})$. Se presentaron 12 ensayos de 2 min, con un intervalo entre ensayos *promedio* de 8 min.
+
+- Los choques fueron programados aleatoriamente *en toda la sesión*. Cada segundo se evaluaba con $p(\text{EI})$ si se administraba choque o no (¡los intervalos EI tenían distribución exponencial!).
+
+]
 
 .footnote[1."Probability of shock in the presence and absence of CS in fear conditioning"]
 
 ---
 
-- Los choques fueron programados aleatoriamente *en toda la sesión*, de 2h de duración. Cada segundo se evaluaba con $p(\text{EI})$ si se administraba choque o no (cada ensayo fue un ensayo de Bernuilli, lo que arroja una distribución geométrica, o exponencial, de intervalos entre choques!).
+- Lo que se manipuló fue un parámetro de un proceso de Poisson (eventos por segundo): «Only the .inverse[expected] probability of US were explicitly programmed; the .inverse[actual] sequence [es decir, la distribución exponencial] of US was generated separately». Uno para el EI durante el EC, otro para el EI en su ausencia.
+
+- Hubo 12 EC en cada una de las 5 sesiones de condicionamiento. En total 60 ensayos. Por ejemplo, para $p(\text{EI}\mid \text{EC}_t) = p(\text{EI}\mid \text{noEC}_t)=0.4$, la tasa de choques fue de 0.26/min, (Gallistel, 2021), que multiplicado por 60 ensayos daría 31.2 choques, en 60 ensayos; $31.2/60\neq 0.4$
+
+- ¿Por qué no es 0.4? Porque lo que modeló Rescorla fue la probabilidad de recibir un choque o más durante el EC. Lo que importó fue la cantidad de EC durante los cuáles no hubo choque, del 60%.
+
+- Esto podía suceder porque la probabilidad del EI se calculaba segundo a segundo. 
+
+---
+
+- La distribución de choques durante los no-ensayos se vería de esta manera:
+
+```{r poisson, out.width='40%', fig.cap='Proceso de Poisson (Gallistel, 2021)', fig.align = 'center'}
+knitr::include_graphics('./img/poisson_process.png')
+```
+
+- El problema es separar el tiempo en intervalos. Hay intervalos de EC, de EI e intervalos EC-EC. Durante esos intervalos, en algunos ocurriría el EC/EI, en otros no (noEC/noEI). Estos no-eventos se consideran fallas de ocurrencia de EC/EI en el momento en el que .inverse[se espera que sucedan].
+
+---
+
+## Contingencia como correlación/covarianza
 
 --
 
-- Lo que se manipuló fue un parámetro de un proceso de Poisson (eventos por segundo): «Only the .inverse[expected] probability of US were explicitly programmed; the .inverse[actual] sequence [es decir, la distribución exponencial] of US was generated separately». Uno para el EI durante el EC, otro para el EI en su ausencia.
+- Originalmente, Baum propuso la que la contingencia es mejor entendida como correlación entre eventos aleatorios: la tasa de respuesta y la tasa de reforzadores.
 
-- Hubo 12 EC en cada una de las 5 sesiones de condicionamiento. En total 60 ensayos. Por ejemplo, para $p(\text{EI}\mid \text{EC}_t) = p(\text{EI}\mid \text{noEC}_t)=0.4$, la tasa de choques fue de 0.26/min, (Gallistel, 2021), que multiplicado por 60 ensayos daría 31.2 choques, en 60 ensayos; $31.2/60\neq 0.4$.
+--
 
-- Con un proceso como este, 
+- Actualmente, por alguna razón, prefiere referirse a esto como *covarianza*. 
+
+--
+
+- La correlación y la covarianza están relacionadas entre sí por la desviación estándar
+
+$$
+\begin{equation*}
+  \text{Cov}[x, y] = \frac{1}{n} \sum_{x,y}(x - \mathbb{E}[x])(y - \mathbb{E}[y])=\frac{1}{n} \mathbf{x}_0^\top \mathbf{y}_0
+\end{equation*}
+$$
+
+\begin{align*}
+    \rho = \cos \theta &= \frac{\frac{1}{n} \mathbf{x}_0^\top \mathbf{y}_0}{\sqrt{1/n}\| \mathbf{x}_0 \| \sqrt{1/n}\| \mathbf{y}_0 \| }\\
+      &= \frac{\mathbf{x}_0^\top \mathbf{y}_0}{\| \mathbf{x}_0 \| \| \mathbf{y}_0 \| } = \frac{\text{Cov}[x, y]}{\text{SD}[x]\times \text{SD}[y]}
+\end{align*}
+
+---
+
+- Baum<sup>2</sup> traza el origen de su *ley* en la intuición de Rescorla que ya mencioné.
+--
+
+- Por alguna razón, define la dependencia entre dos tasas de eventos en términos de covarianza incluso cuando la relación es no lineal
+
+```{r baum_cov, out.width='40%', fig.cap='', fig.align='center'}
+knitr::include_graphics('./img/Baum_cov_nocov.png')
+```
+
+.footnote[2 Three Laws: Allocation, Induction, and Covariance]
+
+---
+
+- Pero, además, una tasa es cantidad de eventos por unidad de tiempo.
+
+--
+
+- Baum también sugiere que la conducta operante constituye un bucle de retroalimentación negativa
+
+.pull-left[
+```{r feedback, out.width='60%', fig.cap=''}
+knitr::include_graphics('./img/baum_feedback.png')
+```
+
+- La actividad produce reforzadores.
+- Los reforzadores inducen actividad.
+
+]
+
+.pull-right[
+
+- Suponiendo que es un termostato. 
+- El punto fijo (set-point) es 24°C.
+
+```{r stepfbck, out.width='60%', fig.cap=''}
+knitr::include_graphics('./img/step_response_control.png')
+```
+
+- ¿Qué sucede cuando la diferencia entre el set-point y la tasa de reforzadores es muy pequeña? En el límite, esta diferencia es 0. 
+
+]
+
+---
