@@ -32,7 +32,7 @@ blockquote {
 
 .title-slide .author {
   font-family: "Latin Modern Roman";
-  font-size: 2em;
+  font-size: 1.8em;
   position: absolute;
   /* bottom: 50%; */
   left: 50%;
@@ -44,13 +44,13 @@ blockquote {
 .title-slide h1 {
   font-family: "Latin Modern Sans";
   font-weight: bold;
-  font-size: 2.5em;
+  font-size: 2.2em;
   /* color: #970639; */
 }
 
 .title-slide .date {
   font-family: "Latin Modern Roman";
-  font-size: 1em;
+  font-size: 1.2em;
   position: absolute;
   bottom: 18%;
   left: 50%;
