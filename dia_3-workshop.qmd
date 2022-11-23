@@ -10,10 +10,15 @@ engine: knitr
 
 Instalaremos algunos paquetes necesarios.
 
+1. Primero abrimos un script de R.
+2. Luego, escribimos lo siguiente
+
 ```r
 install.packages('devtools')
 devtools::install_github('jealcalat/YEAB')
 ```
+
+3. Finalmente, bamos a Background Jobs y ejecutamos el script. Esto hará que se ejecute en segundo plano y podremos seguir trabajando en nuestra sesión activa de RStudio.
 
 El paquete `YEAB` es un paquete experimental, aún en desarrollo. Para más información consultar la [Wiki](https://github.com/jealcalat/YEAB/wiki) del paquete.
 
