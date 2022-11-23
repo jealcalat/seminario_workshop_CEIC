@@ -19,7 +19,6 @@ class: title-slide center
 ```{r setup, include=FALSE}
 library(knitr)
 library(xaringan)
-library(reticulate)
 options(htmltools.dir.version = FALSE)
 opts_chunk$set(echo=FALSE, fig.pos = "H")
 ```
@@ -36,7 +35,8 @@ style_duo(
   title_slide_text_color = "#970639",
   text_color = "#12695E",
   text_font_family = "Latin Modern Sans",
-  header_h1_font_size = "2.2rem",
+  header_h1_font_size = "2rem",
+  # header_h2_font_size = "1.7",
   text_font_size = '1.2rem',
   header_font_family = "Latin Modern Sans",
   code_font_family = "FiraCode Nerd Font"
@@ -161,9 +161,16 @@ knitr::include_graphics('./img/rescorla1968.png')
 
 - Lo que se manipuló fue un parámetro de un proceso de Poisson (eventos por segundo): «Only the .inverse[expected] probability of US were explicitly programmed; the .inverse[actual] sequence [es decir, la distribución exponencial] of US was generated separately». Uno para el EI durante el EC, otro para el EI en su ausencia.
 
+--
+
+
 - Hubo 12 EC en cada una de las 5 sesiones de condicionamiento. En total 60 ensayos. Por ejemplo, para $p(\text{EI}\mid \text{EC}_t) = p(\text{EI}\mid \text{noEC}_t)=0.4$, la tasa de choques fue de 0.26/min, (Gallistel, 2021), que multiplicado por 60 ensayos daría 31.2 choques, en 60 ensayos; $31.2/60\neq 0.4$
 
+--
+
 - ¿Por qué no es 0.4? Porque lo que modeló Rescorla fue la probabilidad de recibir un choque o más durante el EC. Lo que importó fue la cantidad de EC durante los cuáles no hubo choque, del 60%.
+
+--
 
 - Esto podía suceder porque la probabilidad del EI se calculaba segundo a segundo. 
 
@@ -174,6 +181,7 @@ knitr::include_graphics('./img/rescorla1968.png')
 ```{r poisson, out.width='40%', fig.cap='Proceso de Poisson (Gallistel, 2021)', fig.align = 'center'}
 knitr::include_graphics('./img/poisson_process.png')
 ```
+--
 
 - El problema es separar el tiempo en intervalos. Hay intervalos de EC, de EI e intervalos EC-EC. Durante esos intervalos, en algunos ocurriría el EC/EI, en otros no (noEC/noEI). Estos no-eventos se consideran fallas de ocurrencia de EC/EI en el momento en el que .inverse[se espera que sucedan].
 
@@ -183,15 +191,11 @@ knitr::include_graphics('./img/poisson_process.png')
 
 --
 
-- Originalmente, Baum propuso la que la contingencia es mejor entendida como correlación entre eventos aleatorios: la tasa de respuesta y la tasa de reforzadores.
+- Originalmente, Baum propuso que la contingencia es mejor entendida como correlación entre eventos aleatorios: la tasa de respuesta y la tasa de reforzadores. Actualmente, por alguna razón, prefiere referirse a esto como *covarianza*. 
 
 --
 
-- Actualmente, por alguna razón, prefiere referirse a esto como *covarianza*. 
-
---
-
-- La correlación y la covarianza están relacionadas entre sí por la desviación estándar
+- La correlación y la covarianza están relacionadas entre sí por la desviación estándar de dos vectores aleatorios
 
 $$
 \begin{equation*}
@@ -209,7 +213,7 @@ $$
 - Baum<sup>2</sup> traza el origen de su *ley* en la intuición de Rescorla que ya mencioné.
 --
 
-- Por alguna razón, define la dependencia entre dos tasas de eventos en términos de covarianza incluso cuando la relación es no lineal
+- Define la dependencia entre dos tasas de eventos en términos de covarianza incluso cuando la relación es no lineal
 
 ```{r baum_cov, out.width='50%', fig.cap='', fig.align='center'}
 knitr::include_graphics('./img/Baum_cov_nocov.png')
@@ -219,7 +223,7 @@ knitr::include_graphics('./img/Baum_cov_nocov.png')
 
 ---
 
-- Pero, además, una tasa es cantidad de eventos por unidad de tiempo.
+- Pero, además, una tasa es cantidad de eventos *discretos* por unidad de tiempo.
 
 --
 

@@ -138,9 +138,16 @@ Asumiendo que un ensayo es un `\(t\)` especificado entre el inicio y fin de un E
 
 - Lo que se manipuló fue un parámetro de un proceso de Poisson (eventos por segundo): «Only the .inverse[expected] probability of US were explicitly programmed; the .inverse[actual] sequence [es decir, la distribución exponencial] of US was generated separately». Uno para el EI durante el EC, otro para el EI en su ausencia.
 
+--
+
+
 - Hubo 12 EC en cada una de las 5 sesiones de condicionamiento. En total 60 ensayos. Por ejemplo, para `\(p(\text{EI}\mid \text{EC}_t) = p(\text{EI}\mid \text{noEC}_t)=0.4\)`, la tasa de choques fue de 0.26/min, (Gallistel, 2021), que multiplicado por 60 ensayos daría 31.2 choques, en 60 ensayos; `\(31.2/60\neq 0.4\)`
 
+--
+
 - ¿Por qué no es 0.4? Porque lo que modeló Rescorla fue la probabilidad de recibir un choque o más durante el EC. Lo que importó fue la cantidad de EC durante los cuáles no hubo choque, del 60%.
+
+--
 
 - Esto podía suceder porque la probabilidad del EI se calculaba segundo a segundo. 
 
@@ -152,6 +159,7 @@ Asumiendo que un ensayo es un `\(t\)` especificado entre el inicio y fin de un E
 &lt;img src="./img/poisson_process.png" alt="Proceso de Poisson (Gallistel, 2021)" width="40%" /&gt;
 &lt;p class="caption"&gt;Proceso de Poisson (Gallistel, 2021)&lt;/p&gt;
 &lt;/div&gt;
+--
 
 - El problema es separar el tiempo en intervalos. Hay intervalos de EC, de EI e intervalos EC-EC. Durante esos intervalos, en algunos ocurriría el EC/EI, en otros no (noEC/noEI). Estos no-eventos se consideran fallas de ocurrencia de EC/EI en el momento en el que .inverse[se espera que sucedan].
 
@@ -161,15 +169,11 @@ Asumiendo que un ensayo es un `\(t\)` especificado entre el inicio y fin de un E
 
 --
 
-- Originalmente, Baum propuso la que la contingencia es mejor entendida como correlación entre eventos aleatorios: la tasa de respuesta y la tasa de reforzadores.
+- Originalmente, Baum propuso que la contingencia es mejor entendida como correlación entre eventos aleatorios: la tasa de respuesta y la tasa de reforzadores. Actualmente, por alguna razón, prefiere referirse a esto como *covarianza*. 
 
 --
 
-- Actualmente, por alguna razón, prefiere referirse a esto como *covarianza*. 
-
---
-
-- La correlación y la covarianza están relacionadas entre sí por la desviación estándar
+- La correlación y la covarianza están relacionadas entre sí por la desviación estándar de dos vectores aleatorios
 
 $$
 `\begin{equation*}
@@ -187,7 +191,7 @@ $$
 - Baum&lt;sup&gt;2&lt;/sup&gt; traza el origen de su *ley* en la intuición de Rescorla que ya mencioné.
 --
 
-- Por alguna razón, define la dependencia entre dos tasas de eventos en términos de covarianza incluso cuando la relación es no lineal
+- Define la dependencia entre dos tasas de eventos en términos de covarianza incluso cuando la relación es no lineal
 
 &lt;img src="./img/Baum_cov_nocov.png" width="50%" style="display: block; margin: auto;" /&gt;
 
@@ -195,7 +199,7 @@ $$
 
 ---
 
-- Pero, además, una tasa es cantidad de eventos por unidad de tiempo.
+- Pero, además, una tasa es cantidad de eventos *discretos* por unidad de tiempo.
 
 --
 
