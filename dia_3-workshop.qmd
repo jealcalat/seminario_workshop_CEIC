@@ -1,0 +1,313 @@
+---
+title: "Contingencia e información en la explicación del comportamiento"
+subtitle: "Día 3. Análisis de métricas de información en R"
+author: "Emmanuel Alcalá <br>Ciclo de charlas auspiciado por la Universidad panamericana, campus Guadalajara y Universidad de Guadalajara-CEIC, con financiamiento CONACyT-320943</br>"
+format: html
+engine: knitr
+---
+
+# Preliminares
+
+Instalaremos algunos paquetes necesarios.
+
+```r
+install.packages('devtools')
+devtools::install_github('jealcalat/YEAB')
+```
+
+El paquete `YEAB` es un paquete experimental, aún en desarrollo. Para más información consultar la [Wiki](https://github.com/jealcalat/YEAB/wiki) del paquete.
+
+# Introducción a R (crash course)
+
+## Comandos básicos
+
+**Asignación y vectores**
+
+Por asignar vamos a entender que fijamos un valor (números o cadenas de caracteres) en una constante (letra o nombre). Una vez que asignamos valores, éstos ocupan un lugar en la memoria de la sesión abierta. En R se puede asignar con el signo igual, `=` o con una "flecha" (que es llamado el operador asignación), `<-`. La asignación generalmente sucede de derecha a izquierda (de ahí el sentido de la flecha). En R se considera de buen estilo usar solo `<-` para asignar, y reservar `=` para otros usos.
+
+Por vector nos referimos a una colección de elementos. La longitud del vector es la cantidad de elementos que el vector tiene.
+
+```{r}
+# asignación
+a <- 5 # "a" vale 5; longitud de 1
+vec <- c(1, 2, 7) # "vec" tiene los valores 1, 2 y 7; longitud de 3
+length(vec)
+```
+
+**Operaciones aritméticas**
+
+R puede ser usado como una calculadora.
+
+Suma:
+```{r}
+# sumamos el vector a con el vector vec; debe retornar otro vector con las sumas:
+# 5+1, 5+2, 5+7
+a + vec
+```
+
+Resta:
+
+```{r}
+# 5-1, 5-2, 5-7
+a - vec
+```
+
+Multiplicación:
+
+```{r}
+# retorna vector también
+# 5*1, 5*2, 5*7
+a * vec
+```
+
+División:
+
+```{r}
+# retorna vector también
+# 5/1, 5/2, 5/7
+a / vec
+```
+
+Raíz cuadrada:
+
+```{r}
+# retorna vector también
+# sqrt(1), sqrt(2), sqrt(7)
+sqrt(vec)
+```
+
+Potenciación:
+
+```{r}
+# retorna vector también
+# 5^1, 5^2, 5^7
+a^vec
+```
+
+La raíz cuadrada es un caso de potenciación a la 1/2
+
+$$
+  \sqrt[\uproot{5} m]{x^n} = x^{n/m}
+$$
+
+```{r}
+vec^(1/2)
+```
+
+El exponente con el número de Euler $e$ es un caso de potenciación
+
+```{r}
+# e^1, e^2, e^7
+exp(vec)
+```
+
+Logaritmos
+
+```{r}
+# logaritmo natural, o base e
+log(vec)
+# logaritmo base 2
+log(vec, base = 2)
+# logaritmo base 10
+log(vec, base = 10)
+```
+
+## Funciones
+
+Una función es una transformación, o un mapeo, desde un conjunto de partida $X$ hasta un conjunto de llegada $Y$. Decimos que $Y$ es una *función* de $X$, a veces expresado como $f(x) = y$.
+
+Programemos la función 
+
+$$
+  y = 2x + x^2
+$$
+
+```{r}
+fx <- function(x) {
+  2 * x + x^2
+}
+```
+
+Dentro del paréntesis en `function(x)` se encuentran los *argumentos* de la función. En este caso, el único argumento ex $x$. Dentro de las llaves se encuentra el *cuerpo* de la función. En este caso, la transformación que queremos hacer: multiplicar $x$ por 2, luego sumarle el cuadrado de $x$.
+
+Probemos nuestra función para 
+
+$$
+X = \{5, 10, 2\}
+$$
+
+```{r}
+# asignamos los valores al vector x
+x <- c(5, 10, 2)
+# los resultados serán 2*5 + 5^2 para el primero
+# 2*10 + 10^2 para el segundo y
+# 2*2 + 2^2 para el tercero
+fx(x)
+```
+
+Ahora una función más compleja:
+
+$$
+  y = ax + bx^2
+$$
+
+Ahora no tenemos números mutiplicando a $x$, sino *constantes*.
+
+```{r}
+fx_ab <- function(x, a, b) {
+  a * x + b * x^2
+}
+```
+
+Lo que hicimos fue agregar $a$ y $b$ como *argumentos* de la función. Al igual que con $x$, al usar la función debemos indicar su valor. Si queremos que $a=2$ y $b=3$
+
+```{r}
+fx_ab(x, a = 2, b = 3)
+# alternativamente
+a <- 2
+b <- 3
+fx_ab(x, a = a, b = b)
+```
+
+## Gráficos
+
+En R también se puede graficar. Existen diferentes formas de hacerlo. Como existen diferentes paqueterías, hay muchas opciones para realizar gráficos. La más básica es la que viene con R base, la función `plot()`.
+
+```{r}
+x <- 1:10 # valores del 1 al 10 separados por 1
+par(las = 1)
+plot(x)
+```
+
+Algunos elementos gráficos que quizá quieras modificar:
+
+```r
+par(las = 1) # para que las etiquetas de los ejes sean horizontales
+plot(
+  x, 
+  y,
+  xlab = "Eje x", # etiqueta de eje x
+  ylab = "Eje y", # etiqueta del eje y
+  type = 'l', # tipo de gráfico; l para línea, p para puntos, b para ambos,
+  pch = 21, # tipo de punto si gráfico es p ó b; existen del 1 al 25
+  lty = 1, # tipo de línea si gráfico es l ó b; existen del 0 al 5 (Creo)
+  cex = 2, # tamaño del punto
+  lwd = 2, # grosor de línea
+  main = "Título de gráfico", # pues eso
+  bg = 'black', # relleno del punto,
+  col = "red" # color de la línea (o para ciertos tipos de punto, el contorno)
+)
+```
+
+Grafiquemos nuestra función 
+
+$$
+  y = ax + bx^2
+$$
+
+```{r}
+fx_ab <- function(x, a, b) {
+  a * x + b * x^2
+}
+x <- seq(-10, 10, 0.5) # del -10 al 10 cada 0.1
+y <- fx_ab(x = x, a = 2, b = 3)
+par(las = 1)
+plot(
+  x = x,
+  y = y,
+  xlab = "Vector x",
+  ylab = "f(x)",
+  pch = 21,
+  col = 2,
+  bg = 7,
+  main = "Gráfico de a*x + b*x^2; a=2, b=3"
+)
+```
+
+Ahora graficamos una función aún más compleja: la función de densidad de probabilidad normal.
+
+$$
+  p(x) = \frac{1}{\sigma \sqrt{2\pi}} \exp\left\{\frac{-(x-\mu)^2}{2\sigma^2}\right\}
+$$
+
+¿Cuántos argumentos necesitamos?
+
+```{r}
+normal_den <- function(x, sigma, mu){
+  1 / (sigma * sqrt(2 * pi)) * exp(-(x - mu)^2 / 2 * sigma^2)
+}
+```
+
+Probando el efecto de $\sigma$ con $\sigma=\{1, 4, 8\}$ y $\mu=0$.
+
+Necesitamos hacer un ciclo `for`.
+
+```{r}
+# asignar valores al vector sigma
+sigma_vec <- c(1, 4, 8)
+# asignar valores a x, de cuyos valores queremos las probabilidades
+x <- seq(-5, 5, 0.1)
+
+for (sigma  in sigma_vec){ # por cada valor de sigma_vec 
+  # hacer lo siguiente, hasta agotar todos los elementos de sigma_vec
+  # obtener el vector de probabilidades
+  px <- normal_den(x, sigma = sigma, mu = 0)
+  if (sigma == 1) {# si sigma es 1 (el primer valor)
+    # graficar una primera vez
+    par(las = 1)
+    plot(
+      x,
+      px,
+      type = 'l',
+      xlab = 'x',
+      ylab = 'p(x)',
+      main = "Graficando normal"
+    )
+  } else {
+    # si sigma no es 1, añadir los siguientes elementos gráficos
+    lines(x, px)
+  }
+}
+```
+
+Ahora probemos el efecto de diferentes $\mu$ con $\sigma=2$
+
+```{r}
+# asignar valores al vector sigma
+mu_vec <- c(0, 2, 4)
+# asignar valores a x, de cuyos valores queremos las probabilidades
+x <- seq(-5, 9, 0.1)
+
+for (mu  in mu_vec){ # por cada valor de sigma_vec 
+  # hacer lo siguiente, hasta agotar todos los elementos de sigma_vec
+  # obtener el vector de probabilidades
+  px <- normal_den(x, sigma = 2, mu = mu)
+  if (mu == 0) {# si sigma es 1 (el primer valor)
+    # graficar una primera vez
+    par(las = 1)
+    plot(
+      x,
+      px,
+      type = 'l',
+      xlab = 'x',
+      ylab = 'p(x)',
+      main = "Graficando normal"
+    )
+  } else {
+    # si sigma no es 1, añadir los siguientes elementos gráficos
+    lines(x, px)
+  }
+}
+```
+
+# Programando algunas funciones de teoría de la información
+
+Habíamos definido la entropía como el promedio de la información de una variable aleatoria $X$.
+
+$$
+  H(x) = \sum_{i=1}^n p_i I(x_i) = \sum_{i=1}^n p_i \log_b\frac{1}{p_i}
+$$
+
+```{r}
+
+```

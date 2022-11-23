@@ -372,7 +372,6 @@ Si $X$ es el mensaje de la fuente, y $Y$ el del receptor, ¿cuánta incertidumbr
 
 ---
 
-
 $$
   I(X;Y) = H(X) - H(X|Y)
 $$
