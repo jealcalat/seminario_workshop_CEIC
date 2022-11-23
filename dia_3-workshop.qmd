@@ -308,18 +308,124 @@ $$
   H(x) = \sum_{i=1}^n p_i I(x_i) = \sum_{i=1}^n p_i \log_b\frac{1}{p_i}
 $$
 
+La función necesita de probabilidades. Si tenemos una variable aleatoria, debemos introducir dichas probabilidades. 
+
+El problema es que está definida para variables discretas. Shannon pensó que para distribuciones continuas sería suficiente convertir la sumatoria en una integral
+
+$$
+  h(X) = \int_{\mathcal{X}}p(x)\log\frac{1}{p(x)}dx
+$$
+
+Pero resultó ser incorrecto. Una forma de rodear este problema es discretizar la distribución. Existen varias opciones para la discretización.
+
 ```{r}
+library(dplyr)
+library(infotheo)
+
 entropy_x <- function(x) {
-  
+  X <- as.matrix(x)
+  bins <- discretize(x, nbins=sqrt(nrow(X)))
+  tab_x <- table(bins) %>% as.data.frame()
+  px <- tab_x$Freq / sum(tab_x$Freq)
+  sum(px * log(1/px))
 }
+
+entropy_cont <- function(x, from, to){
+
+  integrand <- function(x, t) {
+    dx <- density(x, from = from, to = to)
+    f.x <- approx(dx$x, dx$y, t)$y
+    hx <- f.x * log(1/f.x)
+    hx[is.infinite(hx)] <- 0
+    hx
+  }
+
+  integrate(integrand, x = x, lower = from, upper = to)$value
+}
+
+set.seed(123)
+x <- rnorm(1000)
+entropy_x(x)
+# discretizar
+Xdiscrete <- discretize(x) # por defecto, nbins = length^(1/3)
+# función entropy de infotheo
+entropy(Xdiscrete)
+# entropía continua
+entropy_cont(x, from = min(x), to = max(x))
 ```
 
 
+La información mutua
+
+$$
+  I(X;Y) = H(X) - H(X|Y)
+$$
+
+es la incertidumbre promedio sobre $X$ que queda después de conocer $Y$. Si dos variables $X$ y $Y$ son independientes, esta cantidad será 0 o próxima a 0.
+
+La métrica de información mutua está implementada en `YEAB` con la función `mut_info_discret`. Por el momento, solo funciona si los vectores $x$ y $y$ son del mismo tamaño. Por ejemplo, si queremos comparar la distribución de intervalos entre reforzadores con la distribución de intervalos entre respuestas, debemos tener un intervalo entre respuestas *por* intervalo entre reforzadores. Una forma de lograr esto sería tomando la media de los intervalos entre respuestas. 
+
+
 ```{r}
+library(YEAB)
+# library(infotheo)
 set.seed(123)
 x <- rnorm(1000)
 y <- rnorm(1000)
 plot(x, y)
 # close to 0 if they are independent
 mut_info_discret(x, y)
+```
+
+
+```{r}
+y <- 100 * x + rnorm(length(x), 0, 12)
+plot(x, y)
+# far from 0 if they are not independent
+mut_info_discret(x, y)
+```
+
+En el siguiente ejemplo, la correlación es 0 pero la información mutua diferente de 0.
+
+```{r}
+set.seed(156)
+x <- seq(-10, 10, 0.1)
+y <- 20 + 2*(1-x^2) + rnorm(length(x), 0, 5)
+plot(x, y)
+mut_info_discret(x, y)
+cor(x, y)
+```
+
+Una métrica interesante es la divergencia Kullback-Leibler, que permite medir disimilitud entre distribuciones
+
+$$
+  KL(p || q) = \int p(x) \log\frac{p(x)}{q(x)} dx
+$$
+
+Está implementada en `YEAB` como `kld_d()`
+
+```{r}
+set.seed(123)
+p <- rnorm(100)
+q <- rnorm(100)
+denp <- density(p, n = 512)
+denq <- density(q, n = 512)
+par(las = 1, mfrow = c(1, 2))
+plot(denp$x, denp$y, xlim = c(-4, 20), xlab = 'x', ylab = 'px')
+lines(denq$x, denq$y, col = 2, lwd = 2)
+
+plot(denp$x, denp$y/denq$y)
+kld_d(p, q, -Inf, Inf) # 0.07579204
+```
+
+```{r}
+q <- rnorm(100, 10, 4)
+denp <- density(p, n = 512)
+denq <- density(q, n = 512)
+par(las = 1, mfrow = c(1, 2))
+plot(denp$x, denp$y, xlim = c(-4, 20), xlab = 'x', ylab = 'px')
+lines(denq$x, denq$y, col = 2, lwd = 2)
+kld_d(p, q, -Inf, Inf) # 7.769912
+# graficar la división
+plot(denq$x, denp$y/denq$y)
 ```
